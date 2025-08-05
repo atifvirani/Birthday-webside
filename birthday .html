@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Birthday Card - Happy Birthday My Love</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Playfair Display', serif;
+  overflow-x: hidden;
+  background: linear-gradient(45deg, #ff9a9e, #fecfef, #ffd1ff, #ff9a9e);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.floating-bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+  border-radius: 50%;
+  animation: floatBubble 12s infinite ease-in-out;
+}
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translateY(100vh) translateX(0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10vh) translateX(100px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+.background-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+  animation: patternShift 20s linear infinite;
+}
+@keyframes patternShift {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(15px) translateY(15px);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hearts-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.heart {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.5rem;
+  animation: floatHeart 15s infinite linear;
+}
+@keyframes floatHeart {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+.card-stack {
+  position: relative;
+  width: min(600px, 85vw);
+  height: min(400px, 60vh);
+  perspective: 1000px;
+  margin: 0 auto;
+}
+.birthday-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+              inset 0 0 20px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  cursor: pointer;
+  overflow: hidden;
+  transform-origin: center bottom;
+}
+.card-content {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.card-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+.card-message {
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  line-height: 1.8;
+  max-width: 90%;
+  white-space: normal;
+  padding: 0.5rem;
+  text-align: center;
+}
+#card1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  z-index: 30;
+  transform: translateY(0) rotateY(0deg);
+}
+#card2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  z-index: 20;
+  transform: translateY(30px) scale(0.95) rotateY(-5deg);
+}
+#card3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  z-index: 10;
+  transform: translateY(60px) scale(0.9) rotateY(5deg);
+}
+.card-active {
+  transform: translateY(-100vh) rotateY(0deg) !important;
+  opacity: 0 !important;
+}
+.card-next {
+  transform: translateY(0) scale(1) rotateY(0deg) !important;
+  opacity: 1 !important;
+  z-index: 30 !important;
+}
+.card-follow {
+  transform: translateY(30px) scale(0.95) rotateY(-5deg) !important;
+  opacity: 1 !important;
+  z-index: 20 !important;
+}
+.card-last {
+  transform: translateY(60px) scale(0.9) rotateY(5deg) !important;
+  opacity: 1 !important;
+  z-index: 10 !important;
+}
+.sparkle {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  animation: sparkleFloat 4s infinite ease-in-out;
+  pointer-events: none;
+}
+@keyframes sparkleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+.instruction {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 1.1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: bounce 2s infinite;
+  z-index: 40;
+}
+.nav-controls {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 40;
+}
+.nav-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  backdrop-filter: blur(4px);
+  font-size: 0.85rem;
+  font-family: 'Dancing Script', cursive;
+  color: white;
+  background: rgba(0,0,0,0.2);
+  z-index: 50;
+}
+@media (max-width: 768px) {
+  .card-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  .card-message {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+  }
+  .birthday-card {
+    padding: 1.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .birthday-card {
+    padding: 1rem;
+  }
+  .card-title {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+  }
+  .card-message {
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+  }
+  .card-message h2 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+  }
+  .instruction {
+    font-size: 0.9rem;
+  }
+  .nav-controls {
+    bottom: 4rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="hearts-bg" id="heartsContainer"></div>
+<div class="floating-bubbles" id="bubblesContainer"></div>
+<div class="background-pattern"></div>
+
+<div class="card-stack">
+  <!-- First Card (Happy Birthday) -->
+  <div class="birthday-card" id="card1">
+    <div class="card-content">
+      <h1 class="card-title">Happy Birthday, My Love ❤️</h1>
+      <div class="sparkle" style="top: 20%; left: 15%;">✨</div>
+      <div class="sparkle" style="top: 30%; right: 20%; animation-delay: 1s;">⭐</div>
+      <div class="sparkle" style="bottom: 25%; left: 25%; animation-delay: 2s;">💫</div>
+      <div class="sparkle" style="bottom: 35%; right: 15%; animation-delay: 0.5s;">✨</div>
+    </div>
+  </div>
+  
+  <!-- Second Card (Message 1) -->
+  <div class="birthday-card" id="card2">
+    <div class="card-content">
+      <div class="card-message">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2rem; margin-bottom: 1rem;">My Dearest Love,</h2>
+        <p>On this special day, I want you to know how much you mean to me. You bring sunshine to my darkest days and fill my heart with endless joy. Every moment with you is a precious gift, and I'm grateful for your love, your laughter, and the beautiful soul that you are.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Third Card (Message 2) -->
+  <div class="birthday-card" id="card3">
+    <div class="card-content">
+      <div class="card-message">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2rem; margin-bottom: 1rem;">Forever Yours,</h2>
+        <p style="font-style: italic;">"Like stars that shine in endless night,<br>
+        Your love fills my world with light.<br>
+        Through seasons that may come and go,<br>
+        My heart for you will always glow.<br><br>
+        Happy Birthday, my darling dear,<br>
+        I'll love you more with every year.<br>
+        You are my dream, my wish come true,<br>
+        Forever and always, I choose you."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" id="prevBtn">←</button>
+  <button class="nav-btn" id="nextBtn">→</button>
+</div>
+
+<div class="instruction" id="instruction">Click the card or use arrows to navigate ❤️</div>
+
+<footer>Designed & Copyright © Mohammed Atif</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = [document.getElementById('card1'), document.getElementById('card2'), document.getElementById('card3')];
+  const instruction = document.getElementById('instruction');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let currentCardIndex = 0;
+  
+  function updateCardStack() {
+    // Reset all cards to base positions
+    cards.forEach((card, index) => {
+      card.style.zIndex = 30 - (index * 10);
+      card.style.opacity = '1';
+      
+      if (index === currentCardIndex) {
+        card.style.transform = 'translateY(0) scale(1) rotateY(0deg)';
+      } else if (index === currentCardIndex + 1) {
+        card.style.transform = 'translateY(30px) scale(0.95) rotateY(-5deg)';
+      } else if (index === currentCardIndex + 2) {
+        card.style.transform = 'translateY(60px) scale(0.9) rotateY(5deg)';
+      } else if (index < currentCardIndex) {
+        card.style.transform = 'translateY(-100vh) rotateY(0deg)';
+        card.style.opacity = '0';
+      }
+    });
+    
+    // Update instruction text
+    if (currentCardIndex === cards.length - 1) {
+      instruction.textContent = 'Happy Birthday My Love! ❤️';
+    } else {
+      instruction.textContent = 'Click the card or use arrows to navigate ❤️';
+    }
+    
+    // Update button states
+    prevBtn.disabled = currentCardIndex === 0;
+    nextBtn.disabled = currentCardIndex === cards.length - 1;
+  }
+  
+  function goToNextCard() {
+    if (currentCardIndex < cards.length - 1) {
+      currentCardIndex++;
+      updateCardStack();
+    }
+  }
+  
+  function goToPrevCard() {
+    if (currentCardIndex > 0) {
+      currentCardIndex--;
+      updateCardStack();
+    }
+  }
+  
+  // Add click event to all cards
+  cards.forEach(card => {
+    card.addEventListener('click', goToNextCard);
+  });
+  
+  // Add navigation button events
+  prevBtn.addEventListener('click', goToPrevCard);
+  nextBtn.addEventListener('click', goToNextCard);
+  
+  // Initialize card stack
+  updateCardStack();
+});
+
+// Floating elements animation
+document.addEventListener('DOMContentLoaded', function() {
+  // Hearts animation
+  const heartsContainer = document.getElementById('heartsContainer');
+  const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+  
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    heart.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 20000);
+  }
+
+  // Bubbles animation
+  const bubblesContainer = document.getElementById('bubblesContainer');
+  function createBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    const size = Math.random() * 50 + 20;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.animationDuration = (Math.random() * 8 + 8) + 's';
+    bubble.style.animationDelay = Math.random() * 5 + 's';
+    bubblesContainer.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 16000);
+  }
+
+  // Initialize animations
+  setInterval(createHeart, 2000);
+  setInterval(createBubble, 1500);
+  
+  // Initial elements
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      createHeart();
+      createBubble();
+    }, i * 1000);
+  }
+});
+</script>
+</body>
+</html>
