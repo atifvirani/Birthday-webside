@@ -158,8 +158,6 @@ body {
   color: white;
   text-align: center;
   width: 100%;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.2s forwards;
 }
 .card-message {
   font-size: clamp(0.9rem, 2.5vw, 1.1rem);
@@ -170,15 +168,14 @@ body {
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
+}
+.fade-in {
   opacity: 0;
-  animation: fadeInUp 1s ease 0.4s forwards;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
 }
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -380,7 +377,7 @@ footer {
   <!-- Card 1 (Cover) -->
   <div class="birthday-card" id="card1">
     <div class="card-content">
-      <h1 class="card-title">Happy Birthday, Afsheen Ji ❤️</h1>
+      <h1 class="card-title fade-in">Happy Birthday, Afsheen Ji ❤️</h1>
       <div class="sparkle" style="top: 20%; left: 15%;">✨</div>
       <div class="sparkle" style="top: 30%; right: 20%; animation-delay: 1s;">⭐</div>
       <div class="sparkle" style="bottom: 25%; left: 25%; animation-delay: 2s;">💫</div>
@@ -391,8 +388,8 @@ footer {
   <!-- Card 2 -->
   <div class="birthday-card" id="card2">
     <div class="card-content">
-      <h1 class="card-title">The Light of My Life</h1>
-      <div class="card-message">
+      <h1 class="card-title fade-in">The Light of My Life</h1>
+      <div class="card-message fade-in">
         <p>Happy Birthday, Afsheen Ji.</p>
         <p>You didn't just enter my life — you transformed it. Every day since you've arrived has been brighter, more peaceful, more full of meaning. I didn't even know it was possible to love someone this deeply. Your smile is my sunrise, your voice my calm, your love my peace.</p>
         <p>I feel so blessed just to exist in the same lifetime as you. Today is your day, and I hope it brings you even a fraction of the joy you bring me every day. You're my heart, my home, my forever. I love you endlessly.</p>
@@ -403,8 +400,8 @@ footer {
   <!-- Card 3 -->
   <div class="birthday-card" id="card3">
     <div class="card-content">
-      <h1 class="card-title">My Forever Happiness</h1>
-      <div class="card-message">
+      <h1 class="card-title fade-in">My Forever Happiness</h1>
+      <div class="card-message fade-in">
         <p>I never thought I could ever feel this kind of happiness in life. But today, as I celebrate your birthday, I realize just how lucky I am. You, Afsheen Ji, are my source of joy, comfort, and love.</p>
         <p>Every second with you feels like magic — like I'm truly alive for the first time. I didn't understand the meaning of happiness until I met you. Your presence completes me.</p>
         <p>Thank you for loving me, for existing, for being everything I never knew I needed. I'll always protect your smile, your dreams, and your heart. Happy Birthday, my love.</p>
@@ -415,8 +412,8 @@ footer {
   <!-- Card 4 -->
   <div class="birthday-card" id="card4">
     <div class="card-content">
-      <h1 class="card-title">You Taught Me Love</h1>
-      <div class="card-message">
+      <h1 class="card-title fade-in">You Taught Me Love</h1>
+      <div class="card-message fade-in">
         <p>Before you, I was just breathing — going through life. But then you came, Afsheen Ji, and showed me how it feels to truly live. You gave every heartbeat of mine a purpose.</p>
         <p>You're the one who brought color to my gray days, music to my silence, and peace to my storms. Your love made me complete in ways words can't explain.</p>
         <p>On your birthday, I want to give you the same kind of warmth and comfort that you've gifted me since day one. I love you more than anything, and I always will. Just stay — always, with me.</p>
@@ -427,8 +424,8 @@ footer {
   <!-- Card 5 -->
   <div class="birthday-card" id="card5">
     <div class="card-content">
-      <h1 class="card-title">Every Little Thing</h1>
-      <div class="card-message">
+      <h1 class="card-title fade-in">Every Little Thing</h1>
+      <div class="card-message fade-in">
         <p>Every little thing about you drives me crazy — in the most beautiful way. Your anger, your cute mood swings, your silly demands — they're not flaws, Afsheen Ji... they're the reasons I love you more every day.</p>
         <p>I don't just accept your imperfections; I adore them. I need them. I crave your chaos, your peace, your love. You're my most precious rhythm in this life.</p>
         <p>On your birthday, I just want you to know how deeply I need all of you — your laughter, your softness, your realness. You're everything I dreamed of, and so much more. I love you.</p>
@@ -439,8 +436,8 @@ footer {
   <!-- Card 6 -->
   <div class="birthday-card" id="card6">
     <div class="card-content">
-      <h1 class="card-title">My Home is You</h1>
-      <div class="card-message">
+      <h1 class="card-title fade-in">My Home is You</h1>
+      <div class="card-message fade-in">
         <p>They say home is where the heart is — and my heart? It lives inside you, Afsheen Ji. When you're near, the world feels gentle. When you smile, the skies clear. When you hold me, I feel safe.</p>
         <p>I don't know what I did to deserve you, but I'll spend every day proving how much you mean to me. You're more than just love — you're my best friend, my hope, my forever person.</p>
         <p>On your special day, know this: you're my whole world, and I wouldn't want it any other way. Happy Birthday, my everything. Just stay mine — always.</p>
@@ -474,6 +471,20 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCardIndex = 0;
   let isAnimating = false;
   
+  function resetFadeAnimations(card) {
+    const title = card.querySelector('.card-title');
+    const message = card.querySelector('.card-message');
+
+    if (title && message) {
+      title.classList.remove('fade-in');
+      message.classList.remove('fade-in');
+      void title.offsetWidth; // force reflow
+      void message.offsetWidth;
+      title.classList.add('fade-in');
+      message.classList.add('fade-in');
+    }
+  }
+
   function updateCardStack() {
     isAnimating = true;
     
@@ -488,6 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
       cards.forEach((card, index) => {
         if (index === currentCardIndex) {
           card.classList.add('card-next');
+          resetFadeAnimations(card);
         } 
         else if (index === currentCardIndex + 1) {
           card.classList.add('card-follow1');
