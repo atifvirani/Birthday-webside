@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Afsheen Ji</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #fff9fb;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            color: #555;
+        }
+        
+        .title-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .card {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .message-card {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .message-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .message-card::-webkit-scrollbar-thumb {
+            background-color: rgba(219, 112, 147, 0.3);
+            border-radius: 4px;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(255, 182, 193, 0.15);
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .title-screen {
+            animation: titleFadeIn 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        @keyframes titleFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .heart {
+            position: fixed;
+            top: -10%;
+            z-index: -1;
+            font-size: 22px;
+            color: rgba(255, 182, 193, 0.5);
+            text-shadow: 0 0 10px rgba(255, 192, 203, 0.3);
+            animation: float linear infinite;
+            filter: drop-shadow(0 0 6px rgba(255, 182, 193, 0.2)) blur(0.8px);
+            opacity: 0.6;
+        }
+        
+        .bubble {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: -1;
+            animation: float linear infinite;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .sparkle {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            z-index: -1;
+            animation: sparkle 2s infinite alternate;
+            filter: blur(0.5px);
+        }
+        
+        @keyframes float {
+            to {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+            }
+        }
+        
+        @keyframes sparkle {
+            0% { opacity: 0.2; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.2; transform: scale(0.3); }
+        }
+        
+        .instruction {
+            animation: pulse 3s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.5; transform: scale(0.98); }
+        }
+        
+        .btn-soft {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 16px rgba(219, 112, 147, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-soft:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(219, 112, 147, 0.2);
+        }
+        
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Background Elements -->
+    <div id="background-elements"></div>
+    
+    <!-- Cards Container -->
+    <div class="w-full max-w-2xl mx-auto relative">
+        <!-- Card 1 - Title Screen -->
+        <div id="card-1" class="card bg-gradient-to-br from-[#ffdfd3] to-[#f9c5d1] p-8 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto flex items-center justify-center min-h-[300px] title-screen">
+            <h2 class="title-font text-5xl md:text-6xl text-rose-700 text-shadow">Happy Birthday, Afsheen Ji ❤️</h2>
+        </div>
+        
+        <!-- Card 2 -->
+        <div id="card-2" class="card hidden bg-gradient-to-br from-[#e2f3fd] to-[#d6eaf8] p-6 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto message-card">
+            <h2 class="title-font text-3xl md:text-4xl mb-4 text-blue-700 text-shadow">My Forever Happiness</h2>
+            <div class="text-base md:text-lg text-blue-800 leading-snug px-2">
+                I never thought I could ever feel this kind of happiness in life.<br><br>
+                But today, as I celebrate your birthday, I realize just how lucky I am.<br><br>
+                You, Afsheen Ji, are my source of joy, comfort, and love.<br><br>
+                Every second with you feels like magic — like I'm truly alive for the first time.<br><br>
+                I didn't understand the meaning of happiness until I met you.<br><br>
+                Your presence completes me.<br><br>
+                Thank you for loving me, for existing, for being everything I never knew I needed.<br><br>
+                I'll always protect your smile, your dreams, and your heart.<br><br>
+                Happy Birthday, my love.
+            </div>
+        </div>
+        
+        <!-- Card 3 -->
+        <div id="card-3" class="card hidden bg-gradient-to-br from-[#fff3e6] to-[#ffe8d6] p-6 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto message-card">
+            <h2 class="title-font text-3xl md:text-4xl mb-4 text-amber-700 text-shadow">You Taught Me Love</h2>
+            <div class="text-base md:text-lg text-amber-800 leading-snug px-2">
+                Before you, I was just breathing — going through life.<br><br>
+                But then you came, Afsheen Ji, and showed me how it feels to truly live.<br><br>
+                You've filled my world with color in places I never imagined had shade.<br><br>
+                You're the one who brought warmth to my winters, and peace to my chaos.<br><br>
+                Your love made me whole in ways I can't explain.<br><br>
+                On your birthday, I just wish you feel the same comfort and warmth that you've brought into my life since the first day.<br><br>
+                I love you — now and forever.
+            </div>
+        </div>
+        
+        <!-- Card 4 -->
+        <div id="card-4" class="card hidden bg-gradient-to-br from-[#f5e6ff] to-[#e9d4ff] p-6 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto message-card">
+            <h2 class="title-font text-3xl md:text-4xl mb-4 text-purple-700 text-shadow">Every Little Thing</h2>
+            <div class="text-base md:text-lg text-purple-800 leading-snug px-2">
+                Every little thing about you drives me crazy — in the most beautiful way.<br><br>
+                Your anger, your mood swings, your silly demands — they're not flaws.<br><br>
+                They're the reasons I love you even more.<br><br>
+                I don't just accept your imperfections... I adore them. I need them.<br><br>
+                I crave your chaos, your peace, your love.<br><br>
+                You give rhythm to my soul.<br><br>
+                On your birthday, I just want you to know how deeply I need all of you —<br><br>
+                your laughter, your softness, your presence.<br><br>
+                You're everything I dreamed of, and even more.
+            </div>
+        </div>
+        
+        <!-- Card 5 -->
+        <div id="card-5" class="card hidden bg-gradient-to-br from-[#fff0f3] to-[#ffd6e0] p-6 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto message-card">
+            <h2 class="title-font text-3xl md:text-4xl mb-4 text-pink-700 text-shadow">My Home is You</h2>
+            <div class="text-base md:text-lg text-pink-800 leading-snug px-2">
+                They say home is where the heart is — and my heart? It lives inside you, Afsheen Ji.<br><br>
+                When you're near, the world feels gentle.<br><br>
+                When you smile, the skies clear.<br><br>
+                When you hold me, I feel safe.<br><br>
+                I don't know what I did to deserve you, but I'll keep showing how much you mean to me.<br><br>
+                You're more than just love — you're my best friend, my forever.<br><br>
+                On your special day, know this:<br><br>
+                You're my whole world, and I wouldn't want it any other way.<br><br>
+                Just stay mine — always.
+            </div>
+        </div>
+        
+        <!-- Card 6 -->
+        <div id="card-6" class="card hidden bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] p-6 rounded-2xl text-center cursor-pointer mb-6 max-w-md mx-auto message-card">
+            <h2 class="title-font text-3xl md:text-4xl mb-4 text-sky-700 text-shadow">For Everything ❤️</h2>
+            <div class="text-base md:text-lg text-sky-800 leading-snug px-2">
+                Thank you for being you.<br><br>
+                For coming into my life and making it infinitely better.<br><br>
+                Thank you for your love, your patience, and your soul.<br><br>
+                I hope this little card brought a smile to your face.<br><br>
+                You deserve all the happiness in the world,<br><br>
+                and I'll spend my life trying to give it to you.<br><br>
+                Happy Birthday again, my love.<br><br>
+                Here's to many more together.
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="flex justify-center gap-4 mt-6">
+            <button id="prev-btn" class="btn-soft px-4 py-2 bg-white/80 hover:bg-white text-rose-600 rounded-full hidden">
+                ← Previous
+            </button>
+            <button id="next-btn" class="btn-soft px-4 py-2 bg-gradient-to-r from-rose-300 to-pink-300 hover:from-rose-400 hover:to-pink-400 text-white rounded-full">
+                Next →
+            </button>
+        </div>
+        
+        <!-- Instruction -->
+        <p class="text-center mt-6 text-rose-500/80 instruction">Click the card to continue ❤️</p>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="fixed bottom-0 w-full py-3 bg-white/30 backdrop-blur-sm text-center border-t border-rose-100/50">
+        <p class="text-rose-600/90">For Afsheen Ji, With All My Love</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Current card index
+            let currentCard = 1;
+            const totalCards = 6;
+            
+            // DOM elements
+            const cards = document.querySelectorAll('[id^="card-"]');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const backgroundElements = document.getElementById('background-elements');
+            
+            // Create background elements
+            function createBackgroundElements() {
+                // Hearts
+                for (let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = Math.random() * 15 + 15 + 's';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.fontSize = (Math.random() * 10 + 16) + 'px';
+                    backgroundElements.appendChild(heart);
+                }
+                
+                // Bubbles
+                for (let i = 0; i < 25; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bubble');
+                    bubble.style.width = Math.random() * 20 + 15 + 'px';
+                    bubble.style.height = bubble.style.width;
+                    bubble.style.left = Math.random() * 100 + 'vw';
+                    bubble.style.animationDuration = Math.random() * 20 + 20 + 's';
+                    bubble.style.animationDelay = Math.random() * 10 + 's';
+                    backgroundElements.appendChild(bubble);
+                }
+                
+                // Sparkles
+                for (let i = 0; i < 35; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    sparkle.style.left = Math.random() * 100 + 'vw';
+                    sparkle.style.top = Math.random() * 100 + 'vh';
+                    sparkle.style.animationDelay = Math.random() * 2 + 's';
+                    backgroundElements.appendChild(sparkle);
+                }
+            }
+            
+            // Show current card
+            function showCard(index) {
+                cards.forEach(card => card.classList.add('hidden'));
+                
+                if (index <= totalCards) {
+                    const currentCardElement = document.getElementById(`card-${index}`);
+                    if (currentCardElement) {
+                        currentCardElement.classList.remove('hidden');
+                        
+                        if (index === 1) {
+                            currentCardElement.classList.add('title-screen');
+                        } else {
+                            currentCardElement.classList.add('fade-in');
+                        }
+                        
+                        // Remove animation classes after completion
+                        setTimeout(() => {
+                            currentCardElement.classList.remove('fade-in', 'title-screen');
+                        }, 1200);
+                    }
+                }
+                
+                // Update button visibility
+                prevBtn.classList.toggle('hidden', index === 1);
+                nextBtn.classList.toggle('hidden', index === totalCards);
+            }
+            
+            // Go to next card
+            function nextCard() {
+                if (currentCard < totalCards) {
+                    currentCard++;
+                    showCard(currentCard);
+                }
+            }
+            
+            // Go to previous card
+            function prevCard() {
+                if (currentCard > 1) {
+                    currentCard--;
+                    showCard(currentCard);
+                }
+            }
+            
+            // Event listeners
+            cards.forEach(card => {
+                card.addEventListener('click', nextCard);
+            });
+            
+            prevBtn.addEventListener('click', prevCard);
+            nextBtn.addEventListener('click', nextCard);
+            
+            // Initialize
+            createBackgroundElements();
+            showCard(currentCard);
+        });
+    </script>
+</body>
+</html>
